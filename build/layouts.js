@@ -22,9 +22,8 @@ export function hero(c) {
   ${S.svg(`
     ${bg}
     ${c.stall ? '' : S.floorLine(floor)}
-    ${S.shadow(300, floor + 6, 190)}
-    ${S.shadow(690, floor + 8, 120)}
-    ${S.sceneParentChild({ x: 150, floor, k: c.k || 0.62, gap: c.gap || 330, wand: true, water: c.water !== false })}
+    ${A.hasPhoto() ? '' : `${S.shadow(300, floor + 6, 190)}${S.shadow(690, floor + 8, 120)}`}
+    ${S.sceneParentChild({ x: 150, floor, k: c.k || 0.62, gap: c.gap || 330, wand: true, water: c.water !== false, vector: c.vector })}
   `)}
   ${abs(`left:${P}px;top:${P}px;right:${P}px`, `
     ${eyebrow(c.eyebrow)}
@@ -55,7 +54,7 @@ export function beforeAfter(c) {
     ${c.beforeArt === 'bin'
       ? S.childInBin({ x: 150, floor, k: 0.66, kneel: true })
       : S.childInTub({ x: 96, floor, k: 0.60 })}
-    ${S.sceneParentChild({ x: 596, floor, k: 0.56, gap: 268, wand: true })}
+    ${S.sceneParentChild({ x: 596, floor, k: 0.56, gap: 268, wand: true, vector: c.vector })}
   `)}
   ${abs(`left:${P}px;top:${P}px;right:${P}px`, `
     ${eyebrow(c.eyebrow)}
@@ -80,14 +79,14 @@ export function usVsThem(c) {
     <circle cx="778" cy="${floor - 190}" r="236" fill="${C.tealLt}" opacity=".6"/>
     ${S.floorLine(floor, 60, 1020)}
     ${S.shadow(286, floor + 6, 168, 26, .11)}
-    ${S.shadow(790, floor + 6, 148, 24, .11)}
+    ${A.hasPhoto() ? '' : S.shadow(790, floor + 6, 148, 24, .11)}
     <!-- generic, unbranded infant tub -->
     <g transform="translate(${286 - (420 * 0.62) / 2},${floor - S.ITUB_H * 0.62}) scale(0.62)">
       ${A.infantTub({ fill: C.prodLo })}
     </g>
-    <g transform="translate(618,${floor - S.PROD_H * 0.44}) scale(0.44)">${A.upsyWithChild({ wand: true })}</g>
-    ${S.shadow(910, floor + 5, 76, 13, .10)}
-    <g transform="translate(830,${floor - S.ADULT_H * 0.50}) scale(0.50)">${A.adultUpright()}</g>
+    <g transform="translate(${A.hasPhoto() ? 640 : 618},${floor - S.PROD_H * (A.hasPhoto() ? 0.56 : 0.44)}) scale(${A.hasPhoto() ? 0.56 : 0.44})">${A.upsyWithChild({ wand: true })}</g>
+    ${A.hasPhoto() ? '' : `${S.shadow(910, floor + 5, 76, 13, .10)}
+    <g transform="translate(830,${floor - S.ADULT_H * 0.50}) scale(0.50)">${A.adultUpright()}</g>`}
     <!-- divider -->
     <line x1="540" y1="${floor - 430}" x2="540" y2="${floor + 30}" stroke="${C.prodEdge}" stroke-width="3" stroke-dasharray="3 12" opacity=".7"/>
   `)}
@@ -133,8 +132,9 @@ export function mechanism(c) {
     ${S.floorLine(floor, 76, 1004)}
     ${S.shadow(470, floor + 5, 172, 26, .10)}
     ${S.shadow(126, floor + 5, 74, 13, .10)}
-    <!-- adult present, close and attending (brief §5) -->
-    <g transform="translate(30,${floor - S.ADULT_H * ak}) scale(${ak})">${A.adultUpright()}</g>
+    <!-- adult present, close and attending (brief §5).
+         With the real photo the adult's hands are already in the shot. -->
+    ${A.hasPhoto() ? '' : `<g transform="translate(30,${floor - S.ADULT_H * ak}) scale(${ak})">${A.adultUpright()}</g>`}
     <g transform="translate(${px},${py}) scale(${k})">${A.upsyWithChild({ wand: true })}</g>
     ${leaders}
   `)}
@@ -160,7 +160,7 @@ export function avatarCallout(c) {
     <rect x="0" y="0" width="1080" height="336" fill="${C.ink}"/>
     ${c.stall ? `<g transform="translate(0,336)"><svg width="1080" height="${floor + 150 - 336}" viewBox="0 0 1080 ${floor + 150 - 336}">${A.showerStall(1080, floor + 150 - 336)}</svg></g>` : S.floorLine(floor)}
     ${S.shadow(330, floor + 6, 175, 26, .12)}
-    ${S.sceneParentChild({ x: 190, floor, k: 0.58, gap: 320, wand: true })}
+    ${S.sceneParentChild({ x: 190, floor, k: 0.58, gap: 320, wand: true, vector: c.vector })}
   `)}
   ${abs(`left:${P}px;top:${P - 12}px;right:${P}px`, `
     ${eyebrow(c.callOut ? 'If this is your bathroom' : c.eyebrow, { color: C.terraLt })}
@@ -178,17 +178,21 @@ export function avatarCallout(c) {
 export function typographic(c) {
   const bg = c.bg || C.ink;
   const fg = c.fg || C.cream;
-  const ax = c.artX !== undefined ? c.artX : 660;
-  const ak = c.artK || 0.54;
+  const photoArt = A.hasPhoto() && !c.vector;
+  const ax = photoArt ? 613 : (c.artX !== undefined ? c.artX : 660);
+  const ak = photoArt ? 0.78 : (c.artK || 0.54);
   const art = c.art === 'product'
-    ? `<g transform="translate(${ax},${1080 - S.PROD_H * ak - (c.artBottom || 40)}) scale(${ak})">${A.upsyWithChild({ wand: true, ghost: c.ghost })}</g>`
+    ? `<g transform="translate(${ax},${1080 - S.PROD_H * ak - (photoArt ? 144 : (c.artBottom || 40))}) scale(${ak})">${A.upsyWithChild({ wand: true, ghost: c.ghost, vector: c.vector })}</g>`
     : c.art === 'frame'
-      ? `<g transform="translate(${ax},${1080 - 540 * ak - (c.artBottom || 20)}) scale(${ak})" opacity=".92">${A.upsy({ wand: true, ghost: true })}</g>`
+      ? `<g transform="translate(${ax},${1080 - 540 * ak - (photoArt ? 150 : (c.artBottom || 20))}) scale(${ak})" opacity="${photoArt ? 1 : .92}">${A.upsy({ wand: true, ghost: !photoArt, vector: c.vector })}</g>`
       : '';
+  const onCard = A.hasPhoto() && !c.vector && c.art;
+  const cardW = 470, cardH = 470;
   return `
   ${S.svg(`
     <rect width="1080" height="1080" fill="${bg}"/>
     ${c.blob !== false ? `<circle cx="880" cy="200" r="230" fill="${c.blobColor || C.terra}" opacity="${c.blobOpacity || .22}"/>` : ''}
+    ${onCard ? `<rect x="${1080 - 76 - cardW}" y="${1080 - 76 - cardH}" width="${cardW}" height="${cardH}" rx="34" fill="${C.cream}"/>` : ''}
     ${art}
   `)}
   ${abs(`left:${P}px;top:${c.top || P}px;right:${P}px`, `
@@ -210,8 +214,8 @@ export function splitDuo(c) {
     <rect x="540" y="0" width="540" height="1080" fill="${C.cream}"/>
     ${A.droplets(540, 1080, 26, C.waterDeep, 12)}
     <!-- left: child + water -->
-    ${S.shadow(268, 918, 176, 28, .13)}
-    <g transform="translate(24,${912 - S.PROD_H * 0.74}) scale(0.74)">${A.upsyWithChild({ wand: true })}</g>
+    ${A.hasPhoto() ? '' : S.shadow(268, 918, 176, 28, .13)}
+    <g transform="translate(24,${912 - S.PROD_H * 0.74}) scale(0.74)">${A.upsyWithChild({ wand: true, vector: c.vector })}</g>
     ${A.spray(432, 512, 158, 220)}
     <!-- right: dry parent -->
     ${S.shadow(806, 922, 132, 22, .13)}
@@ -247,7 +251,7 @@ export function posture(c) {
               ${30 + 366 * k} ${floor - 506 * k + 198 * k}"
           fill="none" stroke="${C.alert}" stroke-width="8" stroke-linecap="round" stroke-dasharray="1 16"/>
     <!-- AFTER: upright beside the frame -->
-    <g transform="translate(600,${floor - S.PROD_H * 0.42}) scale(0.42)">${A.upsyWithChild({ wand: true })}</g>
+    <g transform="translate(600,${floor - S.PROD_H * 0.42}) scale(0.42)">${A.upsyWithChild({ wand: true, vector: c.vector })}</g>
     <g transform="translate(830,${floor - S.ADULT_H * 0.62}) scale(0.62)">${A.adultUprightSil({ fill: C.teal })}</g>
     <!-- spine line, after: traced along the upright torso -->
     <line x1="${830 + 190 * 0.62}" y1="${floor - 712 * 0.62 + 250 * 0.62}"
@@ -308,7 +312,7 @@ export function numeric(c) {
   ${S.svg(`
     <rect width="1080" height="1080" fill="${C.cream}"/>
     <rect x="0" y="596" width="1080" height="6" fill="${C.prodEdge}" opacity=".45"/>
-    <g transform="translate(686,74) scale(0.80)">${A.upsy({ wand: true })}</g>
+    <g transform="translate(${A.hasPhoto() ? 700 : 686},${A.hasPhoto() ? 40 : 74}) scale(${A.hasPhoto() ? 0.62 : 0.80})">${A.upsy({ wand: true })}</g>
     ${A.suds(880, 470, 1.1)}
   `)}
   ${abs(`left:${P}px;top:${P}px;width:660px`, `
@@ -338,10 +342,12 @@ export function nativeCandid(c) {
         ${c.stall ? '' : `<rect y="${floor}" width="1080" height="160" fill="#F2F4F4"/>`}
       </svg>
     </g>
-    ${S.shadow(372, floor + 8, 210, 30, .14)}
-    <g transform="translate(150,${floor - S.PROD_H * 0.92}) rotate(-1.5 200 300) scale(0.92)">${A.upsyWithChild({ wand: true })}</g>
-    ${A.spray(636, 336, 158, 250)}
-    <g transform="translate(700,${floor - S.ADULT_H * 0.95}) scale(0.95)">${A.adultUpright()}</g>
+    ${A.hasPhoto() ? '' : S.shadow(372, floor + 8, 210, 30, .14)}
+    ${A.hasPhoto()
+      ? `<g transform="translate(300,${floor - S.PROD_H * 1.18}) scale(1.18)">${A.upsyWithChild({ wand: true })}</g>`
+      : `<g transform="translate(150,${floor - S.PROD_H * 0.92}) rotate(-1.5 200 300) scale(0.92)">${A.upsyWithChild({ wand: true })}</g>
+         ${A.spray(636, 336, 158, 250)}
+         <g transform="translate(700,${floor - S.ADULT_H * 0.95}) scale(0.95)">${A.adultUpright()}</g>`}
     ${A.droplets(1080, 900, 20, C.waterDeep, 33)}
     <!-- soft vignette so the caption band reads -->
     <rect x="0" y="${1080 - 268}" width="1080" height="268" fill="${C.ink}" opacity=".08"/>
@@ -378,8 +384,8 @@ export function stallDivide(c) {
     <rect x="${gx}" y="${floor}" width="${1080 - gx}" height="${1080 - floor}" fill="${C.creamDeep}"/>
     <line x1="${gx}" y1="${floor}" x2="1080" y2="${floor}" stroke="${C.prodEdge}" stroke-width="4" opacity=".5"/>
     <!-- child, inside -->
-    ${S.shadow(300, floor + 6, 150, 24, .13)}
-    <g transform="translate(122,${floor - S.PROD_H * 0.58}) scale(0.58)">${A.upsyWithChild({ wand: true })}</g>
+    ${A.hasPhoto() ? '' : S.shadow(300, floor + 6, 150, 24, .13)}
+    <g transform="translate(122,${floor - S.PROD_H * 0.58}) scale(0.58)">${A.upsyWithChild({ wand: true, vector: c.vector })}</g>
     ${A.spray(430, floor - 300, 154, 190)}
     <!-- glass panel + frame -->
     <rect x="${gx - 8}" y="0" width="16" height="1080" fill="${C.prodMd}"/>

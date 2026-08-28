@@ -2,8 +2,16 @@ import { C } from './tokens.js';
 
 /* Real-photo override state (see setProductPhoto at the bottom of this file). */
 let PHOTO = { product: null, productChild: null };
-const photoBox = (href) =>
-  `<image href="${href}" x="0" y="-40" width="400" height="580" preserveAspectRatio="xMidYMax meet"/>`;
+const PHOTO_DIMS = { product: null, productChild: null };
+export function setPhotoDims(d) { Object.assign(PHOTO_DIMS, d); }
+/* Draw a photo asset bottom-anchored in the product's 400x540 local box,
+   at its true aspect ratio. h = how tall the asset should render locally. */
+const photoBox = (href, key, h) => {
+  const dim = PHOTO_DIMS[key];
+  const w = dim ? h * (dim.w / dim.h) : 400;
+  return `<image href="${href}" x="${200 - w / 2}" y="${540 - h}" width="${w}" height="${h}"/>`;
+};
+export function hasPhoto() { return !!(PHOTO.product || PHOTO.productChild); }
 
 /* ============================================================
    UPSY ART LIBRARY
@@ -15,8 +23,8 @@ const photoBox = (href) =>
 /* Local space 400 x 540. Origin top-left. Floor line y=520.
    Simplified, brand-accurate stand-in for the Upsy frame:
    wide triangular base + telescoping post + three-sided chest rail. */
-export function upsy({ wand = false, ghost = false } = {}) {
-  if (PHOTO.product) return photoBox(PHOTO.product);
+export function upsy({ wand = false, ghost = false, vector = false } = {}) {
+  if (PHOTO.product && !vector) return photoBox(PHOTO.product, 'product', 430);
   return `<g class="upsy">${upsyBase({ ghost })}${upsyRail({ wand, ghost })}</g>`;
 }
 
@@ -159,14 +167,14 @@ export function toddler({ tone = C.skin, hair = C.hair, dark = false, onBar = fa
    base + post BEHIND the child, chest rail IN FRONT.
    Shares the product's 400x540 local space; the child's head
    rises above y=0, which is intentional. */
-export function upsyWithChild({ wand = false, tone = C.skin, hair = C.hair, dark = false, ghost = false } = {}) {
-  if (PHOTO.productChild) return photoBox(PHOTO.productChild);
+export function upsyWithChild({ wand = false, tone = C.skin, hair = C.hair, dark = false, ghost = false, vector = false } = {}) {
+  if (PHOTO.productChild && !vector) return photoBox(PHOTO.productChild, 'productChild', 566);
   return `
   <g class="upsy-child">
-    ${PHOTO.product ? photoBox(PHOTO.product) : upsyBase({ ghost })}
+    ${upsyBase({ ghost })}
     <g transform="translate(44,-28) scale(1.235)">${toddler({ tone, hair, dark, onBar: true })}</g>
-    ${PHOTO.product ? '' : upsyRail({ wand, ghost })}
-    ${PHOTO.product ? '' : `
+    ${upsyRail({ wand, ghost })}
+    ${`
     <!-- the child's hands resting over the front of the bar -->
     <circle cx="132" cy="262" r="21" fill="${dark ? C.ink : tone}"/>
     <circle cx="268" cy="262" r="21" fill="${dark ? C.ink : tone}"/>`}

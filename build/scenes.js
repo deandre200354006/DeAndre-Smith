@@ -8,14 +8,17 @@ export const svg = (inner, extra = '') =>
 export const ADULT_H = 712, PROD_H = 514, TUB_H = 300, BIN_H = 260, ITUB_H = 234;
 
 /* Parent standing upright + child in the frame, sharing a floor line. */
-export function sceneParentChild({ x = 0, floor = 900, k = 0.7, wand = true, water = true, gap = 300, dark = false } = {}) {
-  const pk = k * A.REL.productToAdult;
-  const px = x, py = floor - PROD_H * pk;
+export function sceneParentChild({ x = 0, floor = 900, k = 0.7, wand = true, water = true, gap = 300, dark = false, vector = false } = {}) {
+  const photo = A.hasPhoto() && !vector;
+  // The supplied photo already contains a real child AND an adult's hands on
+  // the shower head, so no illustrated parent is drawn beside it.
+  const pk = photo ? k * A.REL.productToAdult * 1.62 : k * A.REL.productToAdult;
+  const px = photo ? x + gap * 0.34 : x, py = floor - PROD_H * pk;
   const ax = x + gap, ay = floor - ADULT_H * k;
   return `
-    <g transform="translate(${px},${py}) scale(${pk})">${A.upsyWithChild({ wand, dark })}</g>
-    ${water ? A.spray(px + 340 * pk, py + 150 * pk, 156, 210 * pk) : ''}
-    <g transform="translate(${ax},${ay}) scale(${k})">${A.adultUpright()}</g>`;
+    <g transform="translate(${px},${py}) scale(${pk})">${A.upsyWithChild({ wand, dark, vector })}</g>
+    ${!photo && water ? A.spray(px + 340 * pk, py + 150 * pk, 156, 210 * pk) : ''}
+    ${photo ? '' : `<g transform="translate(${ax},${ay}) scale(${k})">${A.adultUpright()}</g>`}`;
 }
 
 /* Child standing unsupported in a tub, parent's hand steadying: the "before". */

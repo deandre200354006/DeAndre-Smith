@@ -133,7 +133,7 @@ export const CONCEPTS = [
   /* ---------- #6 · SA1 · Bathe your baby without getting in ---------- */
   { h: 6, c: 1, construction: 'producthero', layout: 'stallDivide', avatar: 1,
     lines: ['Bathe your baby without', 'getting in the shower.'], size: 74,
-    eyebrow: 'Off the wet tile', offer: 'bar',
+    eyebrow: 'Off the wet tile', offer: 'bar', vector: true,
     note: 'Spatial relationship is the message: child inside, parent outside — dressed, dry, upright, within arm’s reach.' },
 
   { h: 6, c: 2, construction: 'mechanism', layout: 'mechanism', avatar: 1,
@@ -147,7 +147,7 @@ export const CONCEPTS = [
     note: 'The docked wand is the supporting proof for the dry-parent promise.' },
 
   { h: 6, c: 3, construction: 'native', layout: 'stallDivide', avatar: 1,
-    lines: ['Bathe your baby without', 'getting in the shower.'], size: 52,
+    lines: ['Bathe your baby without', 'getting in the shower.'], size: 52, vector: true,
     quote: R.r5.hands, native: true, offer: false,
     note: 'The review that confirms the shower-head holder. Parent stays visibly present and within reach.' },
 
@@ -155,7 +155,7 @@ export const CONCEPTS = [
   /* Brief: brevity is the asset. No sub-headline, no feature list, no offer. */
   { h: 7, c: 1, construction: 'typographic', layout: 'splitDuo', avatar: 1,
     lines: ['They get clean.', 'You stay dry.'], size: 92,
-    offer: false,
+    offer: false, vector: true,
     note: 'Clean two-panel split: child and water on one side, dry parent on the other.' },
 
   { h: 7, c: 2, construction: 'typographic', layout: 'typographic', avatar: 1,
@@ -170,7 +170,7 @@ export const CONCEPTS = [
     note: 'Simplest photographic-style read of the split. No feature list.' },
 
   /* ---------- #8 · SA3 · Baby comes up. Your back stays straight. ---- */
-  { h: 8, c: 1, construction: 'beforeafter', layout: 'posture', avatar: 3,
+  { h: 8, c: 1, construction: 'beforeafter', layout: 'posture', avatar: 3, vector: true,
     lines: ['Baby comes up.', 'Your back stays straight.'], size: 78,
     eyebrow: 'It is the angle, not the weight',
     labelA: 'Folded over the rim', labelB: 'Standing up straight',

@@ -5,7 +5,7 @@ import { shell } from './shell.js';
 import { shoot } from './render.mjs';
 import { LAYOUTS } from './layouts.js';
 import { CONCEPTS, HEADLINES, fileFor } from './concepts.js';
-import { setProductPhoto } from './art.js';
+import { setProductPhoto, setPhotoDims } from './art.js';
 
 const __dir = path.dirname(fileURLToPath(import.meta.url));
 const ROOT  = path.resolve(__dir, '..');
@@ -20,7 +20,10 @@ const asDataUri = (f) => {
   const mime = ext === 'jpg' ? 'jpeg' : ext;
   return `data:image/${mime};base64,${fs.readFileSync(p).toString('base64')}`;
 };
+const pngSize = (f) => { const p = path.join(ASSET, f); if (!fs.existsSync(p)) return null;
+  const b = fs.readFileSync(p); return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) }; };
 const photo = { product: asDataUri('product.png'), productChild: asDataUri('product-child.png') };
+setPhotoDims({ product: pngSize('product.png'), productChild: pngSize('product-child.png') });
 if (photo.product || photo.productChild) {
   setProductPhoto(photo);
   console.log('using real product photo:', Object.entries(photo).filter(([, v]) => v).map(([k]) => k).join(', '));

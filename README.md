@@ -16,26 +16,51 @@ node build/build.mjs h05     # render a subset by filename fragment
 Output lands in `out/`, named per the brief:
 `upsy_h[01-10]_c[1-3]_[construction].png`
 
-## Swapping in the real product photo
+## The product photo
 
-Every ad uses a **vector stand-in** of the Upsy frame, redrawn from your product
-photo: wide triangular non-slip mat with the embossed grip ring, two-stage telescoping
-post with the height scale and lock lever, padded adjustable waist bar, and the grey
-shower-head cradle on top with the handheld head seated in it. Your product page
-(`cozybaby.shop/products/bath`) is blocked by this environment's network egress and the
-photo was never written to disk, so this is drawn by eye, not traced.
+The ads use **your real product photo**. `Screenshot 2026-08-28 024401.png` (committed
+at the repo root) is cut into two transparent-background assets by
+`build/cutout.mjs`:
 
-To swap in the real thing:
+| Asset | What it is |
+|---|---|
+| `build/assets/product.png` | the frame alone |
+| `build/assets/product-child.png` | the frame with the child, and the adult's hands on the shower head |
 
-1. Save a **transparent-background** cutout to `build/assets/product.png`
-   (frame alone) and optionally `build/assets/product-child.png` (frame with a child
-   in it).
-2. `npm run build`
+```bash
+node build/cutout.mjs "Screenshot 2026-08-28 024401.png"   # re-cut
+npm run build                                              # re-render
+```
 
-The renderer detects the files and drops them into the same 400×540 local box every
-layout already positions — scale, floor line and shadows all carry over. Nothing else
-changes. Note that `product-child.png` also replaces the illustrated child, so it must
-show an adult present if a child is visible (see Compliance below).
+The cutter floods the white background inward from the border rather than
+thresholding on brightness, so the product's own white plastic and the soap foam
+survive; a small morphological closing seals the channels the flood leaks through.
+The photo's baked-in drop shadow is **kept on purpose** — its luminance (218–241)
+overlaps real product tones (mat 182, diaper 214, cradle 235), so no threshold can
+separate them. It reads correctly as a shadow on light grounds.
+
+Replacing the photo later is just dropping new files at those two paths and
+rebuilding — or re-running the cutter against a new source image.
+
+### Where the photo is used, and where it is not
+
+The photo already contains a real child **and** an adult's hands, so wherever it
+appears no illustrated parent is drawn beside it — a photographic child next to a
+flat-illustrated adult reads badly, and the photo satisfies the brief's
+adult-present rule on its own.
+
+Five ads stay fully illustrated, flagged `vector: true` in `concepts.js`, because a
+**parent's body is the argument** and no photo of one exists:
+
+| Ad | Why |
+|---|---|
+| `upsy_h06_c1`, `upsy_h06_c3` | child inside the stall, parent outside — the spatial split is the message |
+| `upsy_h07_c1` | two-panel split: child and water vs. dry parent |
+| `upsy_h08_c1` | bent vs. upright posture, in silhouette |
+| `upsy_h09_c2` | tight crop on the child's grip and the parent's hands |
+
+On the four dark-ground typographic ads the photo sits on a light card, so its
+baked-in shadow reads as part of the card instead of a halo.
 
 ## The offer
 
@@ -290,6 +315,8 @@ build/
   layouts.js     12 layout constructions
   concepts.js    the 30 concept definitions + locked headlines
   reviews.js     the five real customer reviews + the excerpts used
+  cutout.mjs     cuts the product photo into transparent assets
+  assets/        product.png, product-child.png (generated)
   shell.js       HTML shell, embedded Archivo, shrink-to-fit headline pass
   render.mjs     Playwright screenshot loop
   build.mjs      entry point + locked-headline guard
