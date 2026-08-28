@@ -1,0 +1,10 @@
+{
+  "name": "upsy-static-ads",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "30 static ad creatives for Upsy, generated from the locked creative brief.",
+  "scripts": {
+    "build": "node build/build.mjs"
+  }
+}
