@@ -1,7 +1,7 @@
 import * as A from './art.js';
 import * as S from './scenes.js';
 import { C } from './tokens.js';
-import { logo, eyebrow, headline, offerBar, offerTag, offerLine, panelLabel } from './chrome.js';
+import { logo, eyebrow, headline, offerBar, offerTag, offerLine, panelLabel, quoteBlock } from './chrome.js';
 
 const P = 76;                                   // safe margin
 const abs = (css, inner) => `<div style="position:absolute;${css}">${inner}</div>`;
@@ -346,10 +346,9 @@ export function nativeCandid(c) {
     <!-- soft vignette so the caption band reads -->
     <rect x="0" y="${1080 - 268}" width="1080" height="268" fill="${C.ink}" opacity=".08"/>
   `)}
-  ${abs(`left:0;right:0;bottom:0;background:${C.ink};padding:34px ${P}px 36px`, `
-    ${eyebrow(c.eyebrow, { color: C.terraLt, size: 22 })}
-    <div style="height:16px"></div>
-    ${headline(c.lines, { size: c.size || 62, color: C.cream, lh: 1.0 })}
+  ${abs(`left:0;right:0;bottom:0;background:${C.ink};padding:30px ${P}px 32px`, `
+    ${headline(c.lines, { size: c.size || 60, color: C.cream, lh: 1.0 })}
+    ${c.quote ? quoteBlock(c.quote) : ''}
   `)}
   ${abs(`left:${P}px;top:${P}px`, logo({ color: C.paper, size: 25 }))}
   ${offerFor(c)}`;
@@ -390,10 +389,9 @@ export function stallDivide(c) {
     <g transform="translate(716,${floor - S.ADULT_H * 0.74}) scale(0.74)">${A.adultUpright()}</g>
   `)}
   ${c.native
-    ? `${abs(`left:0;right:0;bottom:0;background:${C.ink};padding:34px ${P}px 36px`, `
-        ${eyebrow(c.eyebrow, { color: C.terraLt, size: 22 })}
-        <div style="height:16px"></div>
-        ${headline(c.lines, { size: c.size || 62, color: C.cream, lh: 1.0 })}`)}
+    ? `${abs(`left:0;right:0;bottom:0;background:${C.ink};padding:30px ${P}px 32px`, `
+        ${headline(c.lines, { size: c.size || 60, color: C.cream, lh: 1.0 })}
+        ${c.quote ? quoteBlock(c.quote) : ''}`)}
        ${abs(`left:${P}px;top:${P}px`, logo({ color: C.paper, size: 25 }))}`
     : `${abs(`left:${P}px;top:${P}px;width:${1080 - P * 2}px`, `
         ${eyebrow(c.eyebrow)}

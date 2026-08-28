@@ -1,4 +1,5 @@
 import { C } from './tokens.js';
+import { REVIEWS as R } from './reviews.js';
 
 /* =====================================================================
    THE TEN LOCKED HEADLINES  (Section 3 of the brief — do not edit)
@@ -45,18 +46,18 @@ export const CONCEPTS = [
     note: 'The permission. Toddler upright and content, parent relaxed and washing — relief, not safety compliance.' },
 
   { h: 1, c: 3, construction: 'native', layout: 'nativeCandid', avatar: 2,
-    lines: ['Stop making them sit.', 'Let them stand.'], size: 60,
-    eyebrow: 'Bath night, as it actually goes', offer: false,
-    note: 'In-the-moment framing. No invented review, name or rating.' },
+    lines: ['Stop making them sit.', 'Let them stand.'], size: 58,
+    quote: R.r4.standing, offer: false,
+    note: 'In-the-moment framing carrying a real customer review, verbatim. No invented name, rating or platform badge.' },
 
   /* ---------- #2 · SA2 · Stop correcting / start supporting ---------- */
   { h: 2, c: 1, construction: 'mechanism', layout: 'mechanism', avatar: 2,
     lines: ['Stop correcting the standing.', 'Start supporting it.'], size: 62,
     eyebrow: 'The hero mechanism', offer: false,
     callouts: [
-      { at: [64, 168],  to: [742, 0], label: 'Three-sided chest rail' },
-      { at: [336, 168], to: [742, 0], label: 'Textured, anti-pinch grip' },
-      { at: [200, 470], to: [742, 0], label: 'Wide triangular base' },
+      { at: [64, 168],  to: [742, 0], label: 'Padded waist bar the child leans into' },
+      { at: [336, 168], to: [742, 0], label: 'Clamps adjust wider or tighter, and lock' },
+      { at: [200, 470], to: [742, 0], label: 'Wide mat that does not move around' },
     ],
     note: 'Mechanism diagram. Labels name parts of the object only — no specs, no claims.' },
 
@@ -66,9 +67,9 @@ export const CONCEPTS = [
     note: 'The most explanatory of the ten. Plain language only — no clinical styling, no age or weight range printed.' },
 
   { h: 2, c: 3, construction: 'native', layout: 'nativeCandid', avatar: 2,
-    lines: ['Stop correcting the standing.', 'Start supporting it.'], size: 54,
-    eyebrow: 'They were doing what they are built to do', offer: false,
-    note: 'Native framing of the reframe.' },
+    lines: ['Stop correcting the standing.', 'Start supporting it.'], size: 50,
+    quote: R.r1.standing, offer: false,
+    note: 'Native framing of the reframe, evidenced by a real review of a 19-month-old who fought every bath.' },
 
   /* ---------- #3 · SA2 · You didn’t outgrow bath time ------------ */
   { h: 3, c: 1, construction: 'usvsthem', layout: 'usVsThem', avatar: 2,
@@ -88,7 +89,7 @@ export const CONCEPTS = [
   { h: 3, c: 3, construction: 'typographic', layout: 'typographic', avatar: 2,
     lines: ['You didn’t', 'outgrow bath time.', 'Your tub did.'], size: 110,
     eyebrow: 'Reassign the blame', bg: C.ink, fg: C.cream, art: 'frame',
-    artX: 620, artK: 0.52, artBottom: 132,
+    artX: 596, artK: 0.74, artBottom: 128,
     blobColor: C.terra, blobOpacity: 0.2, offer: 'bar',
     note: 'Type-led reading of the same two-clause contrast.' },
 
@@ -105,9 +106,9 @@ export const CONCEPTS = [
     note: 'Names the situation before naming the product. No bathtub in frame.' },
 
   { h: 4, c: 3, construction: 'native', layout: 'nativeCandid', avatar: 1,
-    lines: ['This turns your shower', 'into a baby bath.'], size: 58,
-    eyebrow: 'Shower-only bathroom', stall: true, offer: false,
-    note: 'Candid in-the-stall framing. No bathtub anywhere.' },
+    lines: ['This turns your shower', 'into a baby bath.'], size: 56,
+    quote: R.r1.shower, stall: true, offer: false,
+    note: 'Candid in-the-stall framing, with the review line that speaks to shower stability. No bathtub anywhere.' },
 
   /* ---------- #5 · SA1 · Stop bathing your kid in a bin -------------- */
   { h: 5, c: 1, construction: 'beforeafter', layout: 'beforeAfter', avatar: 1,
@@ -126,7 +127,7 @@ export const CONCEPTS = [
   { h: 5, c: 3, construction: 'typographic', layout: 'typographic', avatar: 1,
     lines: ['Stop bathing', 'your kid', 'in a bin.'], size: 150,
     eyebrow: 'Sharpest headline in the set', bg: C.terra, fg: '#FFFFFF',
-    blob: false, art: 'frame', ghost: true, artX: 640, artK: 0.62, eyeColor: '#FFE2CD', offer: false,
+    blob: false, art: 'frame', ghost: true, artX: 600, artK: 0.80, eyeColor: '#FFE2CD', offer: false,
     note: 'High contrast, minimal, confident — art direction matched to the tone of the line.' },
 
   /* ---------- #6 · SA1 · Bathe your baby without getting in ---------- */
@@ -139,16 +140,16 @@ export const CONCEPTS = [
     lines: ['Bathe your baby without', 'getting in the shower.'], size: 58,
     eyebrow: 'What the frame is holding', offer: false,
     callouts: [
-      { at: [352, 128], to: [742, 0], label: 'Shower wand dock' },
-      { at: [64, 168],  to: [742, 0], label: 'Child holds the rail' },
-      { at: [200, 470], to: [742, 0], label: 'Stands in the shower pan' },
+      { at: [352, 128], to: [742, 0], label: 'Holds the handheld shower head' },
+      { at: [64, 168],  to: [742, 0], label: 'Child stands, held at the waist' },
+      { at: [200, 470], to: [742, 0], label: 'Base stays stable in the pan' },
     ],
     note: 'The docked wand is the supporting proof for the dry-parent promise.' },
 
   { h: 6, c: 3, construction: 'native', layout: 'stallDivide', avatar: 1,
-    lines: ['Bathe your baby without', 'getting in the shower.'], size: 54,
-    eyebrow: 'Fully dressed, still dry', native: true, offer: false,
-    note: 'Parent stays visibly present and within reach — never framed as leaving the room.' },
+    lines: ['Bathe your baby without', 'getting in the shower.'], size: 52,
+    quote: R.r5.hands, native: true, offer: false,
+    note: 'The review that confirms the shower-head holder. Parent stays visibly present and within reach.' },
 
   /* ---------- #7 · SA1 · They get clean. You stay dry. --------------- */
   /* Brief: brevity is the asset. No sub-headline, no feature list, no offer. */
@@ -160,7 +161,7 @@ export const CONCEPTS = [
   { h: 7, c: 2, construction: 'typographic', layout: 'typographic', avatar: 1,
     lines: ['They get clean.', 'You stay dry.'], size: 168,
     eyebrow: '', bg: C.teal, fg: '#FFFFFF', art: 'frame', ghost: true,
-    artX: 620, artK: 0.66, blob: false, gapTop: 8, top: 96, offer: false,
+    artX: 596, artK: 0.82, blob: false, gapTop: 8, top: 96, offer: false,
     note: 'Shortest headline in the set carrying the boldest type. Deliberately uncluttered.' },
 
   { h: 7, c: 3, construction: 'producthero', layout: 'hero', avatar: 1,
@@ -180,8 +181,8 @@ export const CONCEPTS = [
     lines: ['Baby comes up.', 'Your back stays straight.'], size: 64,
     eyebrow: 'Height is the variable', offer: false,
     callouts: [
-      { at: [200, 250], to: [742, 0], label: 'Post raises the child' },
-      { at: [64, 168],  to: [742, 0], label: 'Rail meets them at chest height' },
+      { at: [200, 250], to: [742, 0], label: 'Height adjusts on the post' },
+      { at: [64, 168],  to: [742, 0], label: 'Bar meets them at waist height' },
       { at: [200, 470], to: [742, 0], label: 'Base sits in the tub or pan' },
     ],
     note: 'Shows the change in level. Describes the object; diagnoses nothing.' },
@@ -195,12 +196,12 @@ export const CONCEPTS = [
   { h: 9, c: 1, construction: 'mechanism', layout: 'mechanism', avatar: 3,
     lines: ['Your baby holds the bar.', 'You hold the soap.'], size: 62,
     eyebrow: 'The hero mechanism',
-    support: 'The frame encloses the child on three sides at chest height. They steady themselves by holding on — the same way you would on a rail.',
+    support: 'The frame holds the child at the waist with adjustable locking clamps, and the padded bar gives them something to hold. Both of your hands come back.',
     offer: false,
     callouts: [
-      { at: [64, 168],  to: [742, 0], label: 'Palm grip, three sides' },
-      { at: [336, 168], to: [742, 0], label: 'Textured handrail' },
-      { at: [200, 470], to: [742, 0], label: 'Multi-point friction pads' },
+      { at: [64, 168],  to: [742, 0], label: 'Locking waist clamps' },
+      { at: [336, 168], to: [742, 0], label: 'Padded bar to hold' },
+      { at: [200, 470], to: [742, 0], label: 'Wide non-slip mat' },
     ],
     note: 'Best candidate in the set for a mechanism-diagram treatment.' },
 
@@ -210,15 +211,15 @@ export const CONCEPTS = [
     note: 'Hands-led composition. Parent’s hands stay in frame and busy washing — never off the child and out of frame.' },
 
   { h: 9, c: 3, construction: 'native', layout: 'nativeCandid', avatar: 3,
-    lines: ['Your baby holds the bar.', 'You hold the soap.'], size: 56,
-    eyebrow: 'Both arms, back where they belong', offer: false,
-    note: 'Candid framing of the role split.' },
+    lines: ['Your baby holds the bar.', 'You hold the soap.'], size: 54,
+    quote: R.r2.secure, offer: false,
+    note: 'Candid framing of the role split, with the review line about the child feeling secure.' },
 
   /* ---------- #10 · SA3 · Get both hands back. ---------------------- */
   { h: 10, c: 1, construction: 'typographic', layout: 'typographic', avatar: 3,
     lines: ['Get both', 'hands back.'], size: 186,
     eyebrow: 'The three-hand problem', bg: C.ink, fg: C.cream, art: 'frame',
-    artX: 610, artK: 0.58, artBottom: 30, blobColor: C.terra, blobOpacity: 0.18, top: 90, offer: false,
+    artX: 588, artK: 0.82, artBottom: 24, blobColor: C.terra, blobOpacity: 0.18, top: 90, offer: false,
     note: 'Four words, enormous type, extremely simple image.' },
 
   { h: 10, c: 2, construction: 'numeric', layout: 'numeric', avatar: 3,

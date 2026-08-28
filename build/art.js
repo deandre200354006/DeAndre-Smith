@@ -27,34 +27,39 @@ export function upsyBase({ ghost = false } = {}) {
   const lo = ghost ? '#D5DADE' : C.prodLo;
   return `
   <g class="upsy-base">
-    <!-- base: extruded side -->
-    <path d="M200 400 C300 400 374 442 386 482 C390 500 374 510 352 510
-             L48 510 C26 510 10 500 14 482 C26 442 100 400 200 400 Z"
-          transform="translate(0,14)" fill="${lo}"/>
-    <!-- base: top face -->
-    <path d="M200 400 C300 400 374 442 386 482 C390 500 374 510 352 510
-             L48 510 C26 510 10 500 14 482 C26 442 100 400 200 400 Z"
-          fill="${md}"/>
-    <path d="M200 412 C292 412 360 448 371 483 C374 495 362 502 345 502
-             L55 502 C38 502 26 495 29 483 C40 448 108 412 200 412 Z"
-          fill="${hi}" opacity=".62"/>
-    <!-- grip texture on standing pad -->
-    <g fill="${C.prodEdge}" opacity=".5">
-      ${[0,1,2,3,4,5,6].map(i=>`<circle cx="${146+i*18}" cy="${470}" r="3.4"/>`).join('')}
-      ${[0,1,2,3,4,5].map(i=>`<circle cx="${155+i*18}" cy="${487}" r="3.4"/>`).join('')}
+    <!-- wide triangular mat: extruded side -->
+    <path d="M200 396 C302 396 376 440 388 482 C392 502 374 512 350 512
+             L50 512 C26 512 8 502 12 482 C24 440 98 396 200 396 Z"
+          transform="translate(0,16)" fill="${lo}"/>
+    <!-- mat: top face -->
+    <path d="M200 396 C302 396 376 440 388 482 C392 502 374 512 350 512
+             L50 512 C26 512 8 502 12 482 C24 440 98 396 200 396 Z" fill="${md}"/>
+    <path d="M200 408 C294 408 362 446 373 483 C376 495 364 503 346 503
+             L54 503 C36 503 24 495 27 483 C38 446 106 408 200 408 Z"
+          fill="${hi}" opacity=".55"/>
+    <!-- embossed grip ring + front grooves, as on the mat -->
+    <g fill="none" stroke="${C.prodEdge}" stroke-width="2.6" opacity=".45">
+      <ellipse cx="200" cy="462" rx="52" ry="17" stroke-dasharray="3 9"/>
+      <path d="M96 492 C150 500 250 500 304 492"/>
+      <path d="M74 502 C140 511 260 511 326 502"/>
     </g>
-    <!-- outer post -->
-    <rect x="176" y="250" width="48" height="176" rx="16" fill="${md}"/>
-    <rect x="182" y="254" width="20" height="168" rx="10" fill="${hi}" opacity=".85"/>
-    <!-- inner post w/ height ticks -->
-    <rect x="185" y="118" width="30" height="146" rx="12" fill="${hi}"/>
-    <rect x="185" y="118" width="30" height="146" rx="12" fill="none" stroke="${C.prodEdge}" stroke-width="2" opacity=".5"/>
-    <g stroke="${C.prodEdge}" stroke-width="2.4" opacity=".7" stroke-linecap="round">
-      ${[0,1,2,3,4,5,6].map(i=>`<line x1="191" y1="${140+i*17}" x2="${i%2?203:209}" y2="${140+i*17}"/>`).join('')}
+    <!-- lower post section -->
+    <rect x="170" y="308" width="60" height="126" rx="20" fill="${md}"/>
+    <rect x="178" y="314" width="26" height="114" rx="13" fill="${hi}" opacity=".9"/>
+    <!-- collar where the post meets the mat -->
+    <path d="M158 414 h84 a16 16 0 0 1 16 16 v12 a14 14 0 0 1 -14 14 h-88
+             a14 14 0 0 1 -14 -14 v-12 a16 16 0 0 1 16 -16 z" fill="${lo}"/>
+    <!-- upper telescoping section with the height scale -->
+    <rect x="180" y="262" width="40" height="104" rx="15" fill="${hi}"/>
+    <rect x="180" y="262" width="40" height="104" rx="15" fill="none" stroke="${C.prodEdge}" stroke-width="2" opacity=".45"/>
+    <g stroke="${C.prodEdge}" stroke-width="2.2" opacity=".65" stroke-linecap="round">
+      ${[0,1,2,3,4,5].map(i=>`<line x1="187" y1="${278+i*12}" x2="${i%2?197:205}" y2="${278+i*12}"/>`).join('')}
     </g>
-    <!-- height lock clamp -->
-    <path d="M170 246 h34 a10 10 0 0 1 10 10 v16 a10 10 0 0 1-10 10 h-34 a8 8 0 0 1-8-8 v-20 a8 8 0 0 1 8-8 z" fill="${lo}"/>
-    <rect x="150" y="252" width="22" height="9" rx="4.5" fill="${C.prodEdge}"/>
+    <!-- height lock lever -->
+    <path d="M166 306 h40 a12 12 0 0 1 12 12 v20 a12 12 0 0 1 -12 12 h-40
+             a10 10 0 0 1 -10 -10 v-24 a10 10 0 0 1 10 -10 z" fill="${lo}"/>
+    <rect x="140" y="314" width="28" height="11" rx="5.5" fill="${C.prodEdge}"/>
+    <rect x="176" y="328" width="26" height="7" rx="3.5" fill="${hi}" opacity=".8"/>
   </g>`;
 }
 
@@ -65,25 +70,34 @@ export function upsyRail({ wand = false, ghost = false } = {}) {
   const lo = ghost ? '#D5DADE' : C.prodLo;
   return `
   <g class="upsy-rail">
-    <!-- three-sided chest rail (opens toward viewer) -->
-    <path d="M58 190 L58 150 C58 112 118 92 200 92 C282 92 342 112 342 150 L342 190"
-          fill="none" stroke="${lo}" stroke-width="58" stroke-linecap="round"/>
-    <path d="M58 190 L58 150 C58 112 118 92 200 92 C282 92 342 112 342 150 L342 190"
-          fill="none" stroke="${md}" stroke-width="46" stroke-linecap="round"/>
-    <path d="M64 182 L64 152 C64 122 120 106 200 106 C280 106 336 122 336 152 L336 182"
-          fill="none" stroke="${hi}" stroke-width="15" stroke-linecap="round" opacity=".8"/>
-    <!-- anti-slip grip bands on the two hand sections -->
-    <g stroke="${C.prodEdge}" stroke-width="3" opacity=".55" stroke-linecap="round">
-      ${[0,1,2].map(i=>`<line x1="38" y1="${166+i*15}" x2="78" y2="${166+i*15}"/>`).join('')}
-      ${[0,1,2].map(i=>`<line x1="322" y1="${166+i*15}" x2="362" y2="${166+i*15}"/>`).join('')}
-    </g>
+    <!-- padded adjustable waist bar: near-horizontal, gentle forward bow -->
+    <path d="M104 272 C142 254 172 248 200 248 C228 248 258 254 296 272"
+          fill="none" stroke="${lo}" stroke-width="42" stroke-linecap="round"/>
+    <path d="M104 272 C142 254 172 248 200 248 C228 248 258 254 296 272"
+          fill="none" stroke="${hi}" stroke-width="33" stroke-linecap="round"/>
+    <path d="M112 266 C146 252 174 248 200 248 C226 248 254 252 288 266"
+          fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity=".9"/>
+    <!-- adjustment collars either side of the post -->
+    <rect x="156" y="248" width="20" height="26" rx="9" fill="${md}"/>
+    <rect x="224" y="248" width="20" height="26" rx="9" fill="${md}"/>
+    <!-- neck up to the cradle -->
+    <rect x="184" y="198" width="32" height="58" rx="12" fill="${md}"/>
+    <!-- shower-head cradle on top of the post -->
+    <path d="M162 152 h78 a26 26 0 0 1 26 26 v4 a24 24 0 0 1 -24 24 h-84
+             a24 24 0 0 1 -24 -24 v-4 a26 26 0 0 1 26 -26 z" fill="${lo}"/>
+    <circle cx="160" cy="168" r="23" fill="${md}"/>
+    <circle cx="155" cy="163" r="13" fill="${hi}" opacity=".9"/>
+    <!-- the two prongs the shower head sits between -->
+    <path d="M262 164 L300 154" fill="none" stroke="${md}" stroke-width="26" stroke-linecap="round"/>
+    <path d="M264 188 L304 182" fill="none" stroke="${md}" stroke-width="22" stroke-linecap="round"/>
+    <circle cx="300" cy="154" r="13" fill="${hi}" opacity=".92"/>
+    <circle cx="305" cy="182" r="11" fill="${hi}" opacity=".92"/>
     ${wand ? `
-    <!-- shower wand dock -->
-    <g transform="translate(322,132) rotate(20)">
-      <rect x="-16" y="-13" width="34" height="26" rx="9" fill="${C.terra}"/>
-      <rect x="10" y="-7" width="70" height="14" rx="7" fill="${md}"/>
-      <path d="M78 -18 h30 a12 12 0 0 1 12 12 v12 a12 12 0 0 1 -12 12 h-30 z" fill="${lo}"/>
-      <circle cx="98" cy="0" r="9" fill="${C.prodEdge}" opacity=".7"/>
+    <!-- handheld shower head seated in the cradle -->
+    <g transform="translate(278,158) rotate(12)">
+      <rect x="0" y="4" width="54" height="15" rx="7.5" fill="${md}" stroke="${C.prodEdge}" stroke-width="2"/>
+      <path d="M50 -6 h30 a13 13 0 0 1 13 13 v9 a13 13 0 0 1 -13 13 h-30 z" fill="${lo}"/>
+      <circle cx="86" cy="11" r="9" fill="${C.prodEdge}" opacity=".75"/>
     </g>` : ''}
   </g>`;
 }
@@ -110,7 +124,7 @@ export function upsySide({ ghost = false } = {}) {
 /* ---------- TODDLER ---------------------------------------- */
 /* Standing, back-3/4 to viewer, both hands up on the rail.
    Local space 260 x 400, feet at y=400. */
-export function toddler({ tone = C.skin, hair = C.hair, dark = false } = {}) {
+export function toddler({ tone = C.skin, hair = C.hair, dark = false, onBar = false } = {}) {
   const body = dark ? C.ink : tone;
   const hr   = dark ? C.ink : hair;
   const nappy= dark ? C.inkSoft : '#FFFFFF';
@@ -125,11 +139,16 @@ export function toddler({ tone = C.skin, hair = C.hair, dark = false } = {}) {
     <path d="M84 210 h84 c6 36 -8 66 -42 66 c-34 0 -48 -30 -42 -66 z" fill="${nappy}"/>
     <!-- torso -->
     <path d="M90 118 h72 c9 42 11 74 7 104 h-86 c-4 -30 -2 -62 7 -104 z" fill="${body}"/>
-    <!-- arms out to the sides, hands on the rail -->
+    <!-- arms: out to the sides (loose) or down onto the waist bar -->
+    ${onBar ? `
+    <path d="M94 140 C74 162 62 188 56 210" fill="none" stroke="${body}" stroke-width="31"/>
+    <path d="M158 140 C178 162 190 188 196 210" fill="none" stroke="${body}" stroke-width="31"/>
+    <circle cx="52"  cy="216" r="18" fill="${body}"/>
+    <circle cx="200" cy="216" r="18" fill="${body}"/>` : `
     <path d="M96 142 C64 152 42 162 28 172" fill="none" stroke="${body}" stroke-width="31"/>
     <path d="M156 142 C188 152 210 162 224 172" fill="none" stroke="${body}" stroke-width="31"/>
     <circle cx="24"  cy="174" r="18" fill="${body}"/>
-    <circle cx="228" cy="174" r="18" fill="${body}"/>
+    <circle cx="228" cy="174" r="18" fill="${body}"/>`}
     <!-- head -->
     <circle cx="126" cy="70" r="52" fill="${body}"/>
     <path d="M74 66 c0 -36 24 -54 52 -54 c28 0 52 18 52 54 c-13 -15 -28 -21 -52 -21 c-24 0 -39 6 -52 21 z" fill="${hr}"/>
@@ -145,8 +164,12 @@ export function upsyWithChild({ wand = false, tone = C.skin, hair = C.hair, dark
   return `
   <g class="upsy-child">
     ${PHOTO.product ? photoBox(PHOTO.product) : upsyBase({ ghost })}
-    <g transform="translate(56,-14) scale(1.19)">${toddler({ tone, hair, dark })}</g>
+    <g transform="translate(44,-28) scale(1.235)">${toddler({ tone, hair, dark, onBar: true })}</g>
     ${PHOTO.product ? '' : upsyRail({ wand, ghost })}
+    ${PHOTO.product ? '' : `
+    <!-- the child's hands resting over the front of the bar -->
+    <circle cx="132" cy="262" r="21" fill="${dark ? C.ink : tone}"/>
+    <circle cx="268" cy="262" r="21" fill="${dark ? C.ink : tone}"/>`}
   </g>`;
 }
 

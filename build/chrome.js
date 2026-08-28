@@ -63,3 +63,12 @@ export function offerLine({ color = C.inkSoft } = {}) {
 export function panelLabel(text, { color = C.inkMute, size = 21 } = {}) {
   return `<div style="font-weight:800;font-size:${size}px;letter-spacing:.20em;text-transform:uppercase;color:${color};line-height:1">${text}</div>`;
 }
+
+/* Real customer quote + neutral attribution. Never a fabricated name,
+   star rating or platform badge — none were supplied. */
+export function quoteBlock(quote, { fg = C.cream, accent = C.terraLt } = {}) {
+  return `<div style="margin-top:20px;padding-top:18px;border-top:2px solid ${fg};border-color:${fg};border-top-color:rgba(248,243,234,.22)">
+    <p style="font-weight:500;font-size:24px;line-height:1.34;color:${fg};opacity:.93">&ldquo;${quote}&rdquo;</p>
+    <div style="margin-top:10px;font-weight:800;font-size:17px;letter-spacing:.15em;text-transform:uppercase;color:${accent}">Verified customer review</div>
+  </div>`;
+}

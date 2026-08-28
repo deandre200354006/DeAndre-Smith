@@ -18,11 +18,12 @@ Output lands in `out/`, named per the brief:
 
 ## Swapping in the real product photo
 
-Every ad currently uses a **vector stand-in** of the Upsy frame, drawn to match the
-product photo (wide triangular base, telescoping post with height ticks and lock
-clamp, three-sided padded chest rail, shower-wand dock). Your product page
-(`cozybaby.shop/products/bath`) is blocked by this environment's network egress, and
-the photo you pasted was not saved to disk, so nothing was traced from a live source.
+Every ad uses a **vector stand-in** of the Upsy frame, redrawn from your product
+photo: wide triangular non-slip mat with the embossed grip ring, two-stage telescoping
+post with the height scale and lock lever, padded adjustable waist bar, and the grey
+shower-head cradle on top with the handheld head seated in it. Your product page
+(`cozybaby.shop/products/bath`) is blocked by this environment's network egress and the
+photo was never written to disk, so this is drawn by eye, not traced.
 
 To swap in the real thing:
 
@@ -177,6 +178,53 @@ Each headline gets three genuinely different **constructions**, not three colour
 No headline repeats a construction, so each trio tests three different ways of making
 the same argument.
 
+## Correction: the brief's "hero mechanism" was wrong
+
+§1 of the brief describes a **"three-sided chest rail"** that "triggers the natural
+palm-grip reflex", plus "multi-point friction grip" pads — and calls it *the hero
+mechanism*. §4 of the same brief admits these came from category data, not Upsy's spec
+sheet, and asks for them to be confirmed.
+
+Your product photo and reviews confirm they are not what the product does:
+
+| Brief assumed | Actually | Evidence |
+|---|---|---|
+| Three-sided chest rail gripped by the child | Padded **adjustable locking waist bar** the child is held at | "the locking waist clamps are adjustable… she tried to pull herself out of the clamps and couldn't, it fits snug enough but can be adjusted wider or tighter" |
+| Child stabilises themselves by holding on | Frame holds the child; the bar is something to hold, not the mechanism | same review |
+| Multi-point friction pads vs. suction | Wide mat that stays put | "doesn't move around in the shower… stability was surprisingly good"; "The base stays stable during use" |
+| Shower wand dock *(unconfirmed)* | **Confirmed** — and it is the strongest proof in the set | "It keeps the handheld shower head in place so I can use both hands to wash my little one without constantly adjusting the sprayer" |
+
+All four mechanism-diagram ads were relabelled to describe only what the photo and the
+reviews evidence. Nothing in any image now claims a palm-grip reflex, a three-sided
+rail, or friction pads.
+
+**Headline #9 is unaffected** — "Your baby holds the bar. You hold the soap." is still
+literally true and still locked; the bar is real, it is just a waist bar rather than a
+grip rail. Worth knowing for the landing page, though, if it currently sells the
+palm-grip story.
+
+## Reviews
+
+Five real customer reviews were supplied and are stored in `build/reviews.js` with the
+exact excerpt used in each ad. Five of the six native concepts now carry one, verbatim
+— trimmed only with ellipses, never reworded:
+
+| Ad | Excerpt used |
+|---|---|
+| `upsy_h01_c3_native` | "My grand daughter loves bath time again. No more fussing to sit in the tub. She loves standing." |
+| `upsy_h02_c3_native` | "My daughter who is 19 months hated regular bath tubs and fought me the entire time… She was comfortable after a few minutes." |
+| `upsy_h04_c3_native` | "Very sturdy, easy to set up, doesn't move around in the shower… stability was surprisingly good." |
+| `upsy_h06_c3_native` | "It keeps the handheld shower head in place so I can use both hands to wash my little one without constantly adjusting the sprayer." |
+| `upsy_h09_c3_native` | "Very sturdy, easy to use, and makes bath time much easier. My baby feels secure." |
+
+Attribution is the neutral **"Verified customer review"**. No reviewer names, star
+ratings, platform badges or review counts appear anywhere, because none were supplied —
+inventing them would be fabricated social proof regardless of the reviews being real.
+If you have the source platform and star ratings, they can be added.
+
+The fifth review ("Easy to assemble, make my life so much easier…") is stored but unused;
+its "make sure your baby can stand" caveat is a product-page line, not ad copy.
+
 ## Compliance — how §5 of the brief was applied
 
 - **Headline text is locked.** The build fails if any concept's rendered lines do not
@@ -195,10 +243,9 @@ the same argument.
   plain silhouettes and a dashed spine trace, not a diagram.
 - **No competitor branding.** #3's "before" is a generic unbranded infant-tub
   silhouette; #5's is a generic tote.
-- **No fabricated social proof.** The six "native" ads use the brief's *in-the-moment
-  framing* option — candid composition, slight tilt, caption bar. There are **no
-  invented reviewer names, quotes, star ratings or screenshots**, which would be a
-  fake-review problem regardless of how the brief framed the construction.
+- **No fabricated social proof.** The native ads quote **real supplied reviews**,
+  verbatim, under a neutral "Verified customer review" line. No invented names, star
+  ratings, platform badges or review counts.
 - **Water shown conservatively.** Shallow, child upright and holding the rail, adult
   active in frame.
 
@@ -222,12 +269,15 @@ All of it is in `build/concepts.js` and editable without touching layout code.
 §4 of the brief flags that its mechanism descriptions came from category data, not
 Upsy's spec sheet. Two of those matter for what is drawn:
 
-- **The shower wand dock is drawn on the frame in most ads**, and headlines #6, #7
-  and #10 lean on it. Confirm the dock ships with the product.
+- ~~The shower-head holder~~ — **confirmed** by review 5. Headlines #6, #7 and #10 rest
+  on solid ground.
 - **The base is drawn narrow enough for a shower pan**, which #4 and #6 depend on.
+  Review 1 confirms it works in a shower; the pan's minimum width is still unverified.
 
-Also still unconfirmed and deliberately absent from every image: age/weight range,
-height-adjustment range, materials, whether the frame folds, and any certification.
+Still unconfirmed and deliberately absent from every image: age/weight range,
+height-adjustment range, materials, whether the frame folds, and any certification. One
+review mentions a 19-month-old and another says "make sure your baby can stand" — useful
+for targeting, but neither is a spec, so no age band is printed on any static.
 
 ## Files
 
@@ -239,6 +289,7 @@ build/
   chrome.js      logo, eyebrow, headline, offer components
   layouts.js     12 layout constructions
   concepts.js    the 30 concept definitions + locked headlines
+  reviews.js     the five real customer reviews + the excerpts used
   shell.js       HTML shell, embedded Archivo, shrink-to-fit headline pass
   render.mjs     Playwright screenshot loop
   build.mjs      entry point + locked-headline guard
